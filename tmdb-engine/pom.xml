@@ -14,6 +14,18 @@
     <artifactId>tmdb-engine</artifactId>
     <packaging>jar</packaging>
 
+    <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <url>${repository.url.releases}</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus</id>
+            <url>${repository.url.snapshots}</url>
+            <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>de.inselhome.moviesearch</groupId>

@@ -12,9 +12,26 @@
     <name>Container for movie search engines</name>
     <description>The container project for the movie search engines.</description>
 
+    <properties>
+        <repository.url.releases>http://inselhome.org:8081/nexus/content/repositories/releases/</repository.url.releases>
+        <repository.url.snapshots>http://inselhome.org:8081/nexus/content/repositories/snapshots/</repository.url.snapshots>
+    </properties>
+
     <modules>
         <module>api</module>
         <module>tmdb-engine</module>
     </modules>
+
+    <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <url>${repository.url.releases}</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus</id>
+            <url>${repository.url.snapshots}</url>
+            <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>

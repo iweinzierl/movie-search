@@ -21,7 +21,7 @@ public class MoviePreviewImpl implements MoviePreview {
 
     @Override
     public String getMovieId() {
-        return null;
+        return id;
     }
 
     @Override
