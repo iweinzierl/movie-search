@@ -1,0 +1,11 @@
+.idea
+
+target
+
+api/target
+
+tmdb-engine/requests
+tmdb-engine/target
+
+*.iml
+*.swp
