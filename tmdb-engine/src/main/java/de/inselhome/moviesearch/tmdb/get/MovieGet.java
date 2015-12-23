@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import java.util.List;
 import java.util.Set;
@@ -15,6 +16,8 @@ import org.json.JSONObject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Strings;
 
 import de.inselhome.moviesearch.api.domain.Movie;
 import de.inselhome.moviesearch.tmdb.constants.APIConstants;
@@ -27,6 +30,8 @@ import de.inselhome.moviesearch.tmdb.util.ImageUtils;
 public class MovieGet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MovieGet.class);
+
+    private static final String RELEASE_DATE_FORMAT = "yyyy-MM-dd";
 
     private final String apiKey;
     private final String baseUrl;
@@ -64,13 +69,17 @@ public class MovieGet {
     private Movie convertToMovie(final MovieResult movieResult) {
 
         Movie movie = new MovieImpl(movieResult.getTitle());
+        movie.setId(String.valueOf(movieResult.getId()));
         movie.setOriginalTitle(movieResult.getOriginal_title());
         movie.setDescription(movieResult.getOverview());
         movie.setGenres(convertToGenre(movieResult.getGenres()));
         movie.setCover(createCover(movieResult.getPoster_path()));
         movie.setLength(movieResult.getRuntime());
-        movie.setPublishDate(LocalDate.now());
-        // movie.setPublishDate(movieResult.getRelease_date());
+
+        if (!Strings.isNullOrEmpty(movieResult.getRelease_date())) {
+            movie.setPublishDate(LocalDate.parse(movieResult.getRelease_date(),
+                    DateTimeFormatter.ofPattern(RELEASE_DATE_FORMAT)));
+        }
 
         return movie;
     }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.inselhome.moviesearch.tmdb.util.ListUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,16 +42,23 @@ public class MovieSearch {
         return resultPage.getTotal_pages();
     }
 
-    public List<MoviePreview> getResult() {
+    public List<MoviePreview> getResult(Integer maxResults) {
         List<MoviePreview> moviePreviews = new ArrayList<>();
         int pages = getNumberOfPages();
 
         for (int page = 1; page <= pages; page++) {
+            LOGGER.debug("Process page {} of {}", page, pages);
             List<MovieSearchResult> pageResults = getSearchResult(page);
             List<MoviePreview> moviePagePreviews = convertToMoviePreview(pageResults);
 
-            if (!moviePagePreviews.isEmpty()) {
+            if (!moviePagePreviews.isEmpty() && maxResults == null) {
                 moviePreviews.addAll(moviePagePreviews);
+            } else if (!moviePagePreviews.isEmpty()) {
+                moviePreviews = ListUtil.add(moviePagePreviews, moviePreviews, maxResults);
+
+                if (moviePreviews.size() >= maxResults) {
+                    return moviePreviews;
+                }
             }
         }
 
@@ -60,24 +68,17 @@ public class MovieSearch {
     private List<MoviePreview> convertToMoviePreview(final List<MovieSearchResult> searchResults) {
         List<MoviePreview> previews = new ArrayList<>(searchResults.size());
 
-        previews.addAll(searchResults.stream().map(searchResult -> new MoviePreviewImpl(String.valueOf(searchResult.getId()), searchResult.getTitle(),
-                createCover(searchResult.getPoster_path()))).collect(Collectors.toList()));
+        previews.addAll(searchResults.stream().map(searchResult -> new MoviePreviewImpl(
+                String.valueOf(searchResult.getId()),
+                searchResult.getTitle(),
+                createCoverUri(searchResult.getPoster_path())))
+                .collect(Collectors.toList()));
 
         return previews;
     }
 
-    private String createCover(final String posterPath) {
-        String rawUrl = String.format("%s%s", APIConstants.COVER_BASE_URL, posterPath);
-        LOGGER.debug("Download cover from url: {}", rawUrl);
-
-        try {
-            URL url = new URL(rawUrl);
-            return ImageUtils.covertToBase64(url);
-        } catch (IOException e) {
-            LOGGER.warn("Unable to download and convert movie from '{}'", rawUrl);
-        }
-
-        return null;
+    private String createCoverUri(final String posterPath) {
+        return String.format("%s%s", APIConstants.COVER_BASE_URL, posterPath);
     }
 
     private List<MovieSearchResult> getSearchResult(final int page) {

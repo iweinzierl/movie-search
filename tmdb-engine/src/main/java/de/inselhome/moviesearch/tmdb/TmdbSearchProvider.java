@@ -26,8 +26,13 @@ public class TmdbSearchProvider implements SearchProvider {
 
     @Override
     public List<MoviePreview> search(final String searchString) {
+        return search(searchString, null);
+    }
+
+    @Override
+    public List<MoviePreview> search(final String searchString, final Integer maxResults) {
         MovieSearch movieSearch = new MovieSearch(apiKey, APIConstants.API_ENDPOINT_URL, searchString);
-        return movieSearch.getResult();
+        return movieSearch.getResult(maxResults);
     }
 
     @Override

@@ -6,6 +6,10 @@ import java.util.Set;
 
 public interface Movie {
 
+    void setId(String id);
+
+    String getId();
+
     void setTitle(String title);
 
     String getTitle();
@@ -26,9 +30,9 @@ public interface Movie {
 
     Set<String> getGenres();
 
-    void setLength(int length);
+    void setLength(Integer length);
 
-    int getLength();
+    Integer getLength();
 
     void setPublishDate(LocalDate publishDate);
 

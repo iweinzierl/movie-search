@@ -8,23 +8,31 @@ import de.inselhome.moviesearch.api.domain.Movie;
 
 public class MovieImpl implements Movie {
 
-    private Long id;
+    private String id;
 
     private String title;
 
+    private String originalTitle;
+
     private String cover;
 
+    private String description;
+
     private Set<String> genres;
+
+    private Integer length;
+
+    private LocalDate publishDate;
 
     public MovieImpl(final String title) {
         this.title = title;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(final Long id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -33,19 +41,23 @@ public class MovieImpl implements Movie {
     }
 
     @Override
-    public void setOriginalTitle(final String originalTitle) { }
-
-    @Override
-    public String getOriginalTitle() {
-        return null;
+    public void setOriginalTitle(final String originalTitle) {
+        this.originalTitle = originalTitle;
     }
 
     @Override
-    public void setDescription(final String description) { }
+    public String getOriginalTitle() {
+        return originalTitle;
+    }
+
+    @Override
+    public void setDescription(final String description) {
+        this.description = description;
+    }
 
     @Override
     public String getDescription() {
-        return null;
+        return description;
     }
 
     public void setTitle(final String title) {
@@ -57,19 +69,23 @@ public class MovieImpl implements Movie {
     }
 
     @Override
-    public void setLength(final int length) { }
-
-    @Override
-    public int getLength() {
-        return 0;
+    public void setLength(final Integer length) {
+        this.length = length;
     }
 
     @Override
-    public void setPublishDate(final LocalDate publishDate) { }
+    public Integer getLength() {
+        return length;
+    }
+
+    @Override
+    public void setPublishDate(final LocalDate publishDate) {
+        this.publishDate = publishDate;
+    }
 
     @Override
     public LocalDate getPublishDate() {
-        return null;
+        return publishDate;
     }
 
     public void setGenres(final Set<String> genres) {

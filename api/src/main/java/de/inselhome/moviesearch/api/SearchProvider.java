@@ -12,5 +12,7 @@ public interface SearchProvider {
 
     List<MoviePreview> search(String searchString);
 
+    List<MoviePreview> search(String searchString, Integer maxResults);
+
     Movie get(MoviePreview moviePreview);
 }

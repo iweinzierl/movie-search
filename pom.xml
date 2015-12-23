@@ -4,17 +4,17 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.inselhome.moviesearch</groupId>
-    <artifactId>container</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>com.github.iweinzierl</groupId>
+    <artifactId>moviedatabase-search-api-container</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Container for movie search engines</name>
-    <description>The container project for the movie search engines.</description>
+    <name>Container for moviedatabase search API and TMDB engine.</name>
+    <description>Container for moviedatabase search API and TMDB engine.</description>
 
     <properties>
-        <repository.url.releases>http://inselhome.org:8081/nexus/content/repositories/releases/</repository.url.releases>
-        <repository.url.snapshots>http://inselhome.org:8081/nexus/content/repositories/snapshots/</repository.url.snapshots>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
     </properties>
 
     <modules>
@@ -22,16 +22,11 @@
         <module>tmdb-engine</module>
     </modules>
 
-    <distributionManagement>
-        <repository>
-            <id>nexus</id>
-            <url>${repository.url.releases}</url>
-        </repository>
-        <snapshotRepository>
-            <id>nexus</id>
-            <url>${repository.url.snapshots}</url>
-            <uniqueVersion>false</uniqueVersion>
-        </snapshotRepository>
-    </distributionManagement>
+    <developers>
+        <developer>
+            <name>Ingo Weinzierl</name>
+            <email>weinzierl.ingo@gmail.com</email>
+        </developer>
+    </developers>
 
 </project>

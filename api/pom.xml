@@ -6,12 +6,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>de.inselhome.moviesearch</groupId>
-        <artifactId>container</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <groupId>com.github.iweinzierl</groupId>
+        <artifactId>moviedatabase-search-api-container</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>api</artifactId>
+    <artifactId>moviedatabase-search-api</artifactId>
     <packaging>jar</packaging>
 
 </project>
