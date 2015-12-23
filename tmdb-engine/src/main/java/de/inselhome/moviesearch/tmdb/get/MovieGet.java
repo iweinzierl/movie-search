@@ -1,31 +1,24 @@
 package de.inselhome.moviesearch.tmdb.get;
 
-import java.io.IOException;
-
-import java.net.URL;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.common.base.Strings;
-
 import de.inselhome.moviesearch.api.domain.Movie;
 import de.inselhome.moviesearch.tmdb.constants.APIConstants;
 import de.inselhome.moviesearch.tmdb.domain.MovieImpl;
 import de.inselhome.moviesearch.tmdb.io.JSONHttp;
 import de.inselhome.moviesearch.tmdb.objects.GenreResult;
 import de.inselhome.moviesearch.tmdb.objects.MovieResult;
-import de.inselhome.moviesearch.tmdb.util.ImageUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class MovieGet {
 
@@ -89,16 +82,6 @@ public class MovieGet {
     }
 
     private String createCover(final String posterPath) {
-        String rawUrl = String.format("%s%s", APIConstants.COVER_BASE_URL, posterPath);
-        LOGGER.debug("Download cover from url: {}", rawUrl);
-
-        try {
-            URL url = new URL(rawUrl);
-            return ImageUtils.covertToBase64(url);
-        } catch (IOException e) {
-            LOGGER.warn("Unable to download and convert movie from '{}'", rawUrl);
-        }
-
-        return null;
+        return String.format("%s%s", APIConstants.COVER_BASE_URL, posterPath);
     }
 }

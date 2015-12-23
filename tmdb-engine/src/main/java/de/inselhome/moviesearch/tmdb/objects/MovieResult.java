@@ -1,13 +1,11 @@
 package de.inselhome.moviesearch.tmdb.objects;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.common.base.Strings;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MovieResult {
 
@@ -180,14 +178,10 @@ public class MovieResult {
     }
 
     public static Integer getIntegerIfNotNull(final JSONObject json, final String property) throws JSONException {
-        String value = json.getString(property);
-        if (!Strings.isNullOrEmpty(value)) {
-            try {
-                return Integer.valueOf(value);
-            } catch (NumberFormatException nfe) { /* do nothing */
-            }
+        if (json.isNull(property)) {
+            return null;
+        } else {
+            return json.getInt(property);
         }
-
-        return null;
     }
 }
