@@ -1,29 +1,31 @@
 package de.inselhome.moviesearch.tmdb.objects;
 
+import de.inselhome.moviesearch.tmdb.util.JsonUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MovieSearchResult {
 
-    private int id;
+    private Integer id;
 
     private String title;
     private String original_title;
     private String release_date;
+    private String description;
 
-    private boolean adult;
+    private Boolean adult;
     private String backdrop_path;
     private String poster_path;
 
-    private double popularity;
-    private double vote_average;
-    private int vote_count;
+    private Double popularity;
+    private Double vote_average;
+    private Integer vote_count;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(final int id) {
+    public void setId(final Integer id) {
         this.id = id;
     }
 
@@ -51,11 +53,11 @@ public class MovieSearchResult {
         this.release_date = release_date;
     }
 
-    public boolean isAdult() {
+    public Boolean isAdult() {
         return adult;
     }
 
-    public void setAdult(final boolean adult) {
+    public void setAdult(final Boolean adult) {
         this.adult = adult;
     }
 
@@ -75,42 +77,51 @@ public class MovieSearchResult {
         this.poster_path = poster_path;
     }
 
-    public double getPopularity() {
+    public Double getPopularity() {
         return popularity;
     }
 
-    public void setPopularity(final double popularity) {
+    public void setPopularity(final Double popularity) {
         this.popularity = popularity;
     }
 
-    public double getVote_average() {
+    public Double getVote_average() {
         return vote_average;
     }
 
-    public void setVote_average(final double vote_average) {
+    public void setVote_average(final Double vote_average) {
         this.vote_average = vote_average;
     }
 
-    public int getVote_count() {
+    public Integer getVote_count() {
         return vote_count;
     }
 
-    public void setVote_count(final int vote_count) {
+    public void setVote_count(final Integer vote_count) {
         this.vote_count = vote_count;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public static MovieSearchResult create(final JSONObject json) throws JSONException {
         MovieSearchResult result = new MovieSearchResult();
-        result.setAdult(json.getBoolean("adult"));
-        result.setBackdrop_path(json.getString("backdrop_path"));
-        result.setId(json.getInt("id"));
-        result.setOriginal_title("original_title");
-        result.setPopularity(json.getDouble("popularity"));
-        result.setPoster_path(json.getString("poster_path"));
-        result.setRelease_date(json.getString("release_date"));
-        result.setTitle(json.getString("title"));
-        result.setVote_average(json.getDouble("vote_average"));
-        result.setVote_count(json.getInt("vote_count"));
+        result.setAdult(JsonUtils.getBoolean(json, "adult"));
+        result.setBackdrop_path(JsonUtils.getString(json, "backdrop_path"));
+        result.setId(JsonUtils.getInt(json, "id"));
+        result.setOriginal_title(JsonUtils.getString(json, "original_title"));
+        result.setPopularity(JsonUtils.getDouble(json, "popularity"));
+        result.setPoster_path(JsonUtils.getString(json, "poster_path"));
+        result.setRelease_date(JsonUtils.getString(json, "release_date"));
+        result.setTitle(JsonUtils.getString(json, "title"));
+        result.setVote_average(JsonUtils.getDouble(json, "vote_average"));
+        result.setVote_count(JsonUtils.getInt(json, "vote_count"));
+        result.setDescription(JsonUtils.getString(json, "overview"));
 
         return result;
     }

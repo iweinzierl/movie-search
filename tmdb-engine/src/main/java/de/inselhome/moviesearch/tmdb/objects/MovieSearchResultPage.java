@@ -53,7 +53,7 @@ public class MovieSearchResultPage {
         page.setTotal_pages(json.getInt("total_pages"));
         page.setTotal_results(json.getInt("total_results"));
 
-        List<MovieSearchResult> results = new ArrayList<MovieSearchResult>();
+        List<MovieSearchResult> results = new ArrayList<>();
         JSONArray resultsArray = json.getJSONArray("results");
 
         for (int index = 0; index < resultsArray.length(); index++) {

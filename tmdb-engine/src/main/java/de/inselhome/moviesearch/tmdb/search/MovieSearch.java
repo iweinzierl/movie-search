@@ -71,7 +71,8 @@ public class MovieSearch {
         previews.addAll(searchResults.stream().map(searchResult -> new MoviePreviewImpl(
                 String.valueOf(searchResult.getId()),
                 searchResult.getTitle(),
-                createCoverUri(searchResult.getPoster_path())))
+                createCoverUri(searchResult.getPoster_path()),
+                searchResult.getDescription()))
                 .collect(Collectors.toList()));
 
         return previews;

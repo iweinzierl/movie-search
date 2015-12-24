@@ -7,4 +7,6 @@ public interface MoviePreview {
     String getTitle();
 
     String getCover();
+
+    String getDescription();
 }
