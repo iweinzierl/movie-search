@@ -66,11 +66,11 @@ public class MovieGet {
         movie.setOriginalTitle(movieResult.getOriginal_title());
         movie.setDescription(movieResult.getOverview());
         movie.setGenres(convertToGenre(movieResult.getGenres()));
-        movie.setCover(createCover(movieResult.getPoster_path()));
+        movie.setCoverUrl(createCover(movieResult.getPoster_path()));
         movie.setLength(movieResult.getRuntime());
 
         if (!Strings.isNullOrEmpty(movieResult.getRelease_date())) {
-            movie.setPublishDate(LocalDate.parse(movieResult.getRelease_date(),
+            movie.setPublished(LocalDate.parse(movieResult.getRelease_date(),
                     DateTimeFormatter.ofPattern(RELEASE_DATE_FORMAT)));
         }
 

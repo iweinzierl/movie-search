@@ -22,9 +22,9 @@ public interface Movie {
 
     String getDescription();
 
-    void setCover(String cover);
+    void setCoverUrl(String cover);
 
-    String getCover();
+    String getCoverUrl();
 
     void setGenres(Set<String> genres);
 
@@ -34,7 +34,7 @@ public interface Movie {
 
     Integer getLength();
 
-    void setPublishDate(LocalDate publishDate);
+    void setPublished(LocalDate publishDate);
 
-    LocalDate getPublishDate();
+    LocalDate getPublished();
 }

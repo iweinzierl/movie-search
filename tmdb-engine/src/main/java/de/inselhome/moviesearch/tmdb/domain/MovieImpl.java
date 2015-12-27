@@ -78,13 +78,11 @@ public class MovieImpl implements Movie {
         return length;
     }
 
-    @Override
-    public void setPublishDate(final LocalDate publishDate) {
+    public void setPublished(final LocalDate publishDate) {
         this.publishDate = publishDate;
     }
 
-    @Override
-    public LocalDate getPublishDate() {
+    public LocalDate getPublished() {
         return publishDate;
     }
 
@@ -92,11 +90,11 @@ public class MovieImpl implements Movie {
         this.genres = genres;
     }
 
-    public void setCover(final String cover) {
+    public void setCoverUrl(final String cover) {
         this.cover = cover;
     }
 
-    public String getCover() {
+    public String getCoverUrl() {
         return cover;
     }
 }
