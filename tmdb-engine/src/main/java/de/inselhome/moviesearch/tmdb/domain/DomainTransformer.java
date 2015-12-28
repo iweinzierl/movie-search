@@ -2,6 +2,7 @@ package de.inselhome.moviesearch.tmdb.domain;
 
 import de.inselhome.moviesearch.api.domain.Movie;
 import de.inselhome.moviesearch.api.domain.MoviePreview;
+import de.inselhome.moviesearch.tmdb.constants.APIConstants;
 
 import java.util.List;
 import java.util.Set;
@@ -14,7 +15,7 @@ public class DomainTransformer {
         return new MoviePreviewImpl(
                 String.valueOf(movieResult.getId()),
                 movieResult.getTitle(),
-                movieResult.getBackdropPath(),
+                createCoverUri(movieResult.getPosterPath()),
                 movieResult.getOverview()
         );
     }
@@ -26,7 +27,7 @@ public class DomainTransformer {
 
     public Movie transform(MovieResult movieResult) {
         Movie movie = new MovieImpl(movieResult.getTitle());
-        movie.setCoverUrl(movieResult.getBackdropPath());
+        movie.setCoverUrl(createCoverUri(movieResult.getPosterPath()));
         movie.setDescription(movieResult.getOverview());
         movie.setGenres(transform(movieResult.getGenres()));
         movie.setId(String.valueOf(movieResult.getId()));
@@ -36,12 +37,16 @@ public class DomainTransformer {
         return movie;
     }
 
-    private String transform(GenreResult genreResult) {
+    public String transform(GenreResult genreResult) {
         return genreResult.getName();
     }
 
-    private Set<String> transform(Set<GenreResult> genres) {
+    public Set<String> transform(Set<GenreResult> genres) {
         Stream<String> genresStream = genres.parallelStream().map(this::transform);
         return genresStream.collect(Collectors.toSet());
+    }
+
+    private String createCoverUri(final String posterPath) {
+        return String.format("%s%s", APIConstants.COVER_BASE_URL, posterPath);
     }
 }
