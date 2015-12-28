@@ -4,11 +4,12 @@ import com.google.common.base.Strings;
 import de.inselhome.moviesearch.api.SearchProvider;
 import de.inselhome.moviesearch.api.domain.Movie;
 import de.inselhome.moviesearch.api.domain.MoviePreview;
-import de.inselhome.moviesearch.tmdb.constants.APIConstants;
 import de.inselhome.moviesearch.tmdb.constants.ConfigurationConstants;
 import de.inselhome.moviesearch.tmdb.domain.DomainTransformer;
+import de.inselhome.moviesearch.tmdb.domain.MovieResult;
 import de.inselhome.moviesearch.tmdb.domain.SearchResult;
-import de.inselhome.moviesearch.tmdb.get.MovieGet;
+import de.inselhome.moviesearch.tmdb.get.MovieClient;
+import de.inselhome.moviesearch.tmdb.get.MovieFactory;
 import de.inselhome.moviesearch.tmdb.search.MovieSearchFactory;
 import de.inselhome.moviesearch.tmdb.search.SearchClient;
 import org.slf4j.Logger;
@@ -91,15 +92,21 @@ public class TmdbSearchProvider implements SearchProvider {
 
     @Override
     public Movie get(String movieId) {
-        MovieGet getMovie = new MovieGet(apiKey, APIConstants.API_ENDPOINT_URL,
-                Integer.valueOf(movieId));
-        return getMovie.getMovie();
+        MovieClient client = new MovieFactory(BASE_URL).createMovieClient();
+        Call<MovieResult> movieResultCall = client.getMovie(Integer.valueOf(movieId), apiKey, language);
+
+        try {
+            MovieResult movieResult = movieResultCall.execute().body();
+            return transformer.transform(movieResult);
+        } catch (IOException e) {
+            LOG.error("Unknown error while fetching movie: {}", movieId, e);
+        }
+
+        return null;
     }
 
     @Override
     public Movie get(final MoviePreview moviePreview) {
-        MovieGet getMovie = new MovieGet(apiKey, APIConstants.API_ENDPOINT_URL,
-                Integer.valueOf(moviePreview.getMovieId()));
-        return getMovie.getMovie();
+        return get(moviePreview.getMovieId());
     }
 }
