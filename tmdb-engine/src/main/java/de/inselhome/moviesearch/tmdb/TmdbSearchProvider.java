@@ -78,7 +78,7 @@ public class TmdbSearchProvider implements SearchProvider {
         final List<MoviePreview> collection = new ArrayList<>();
 
         for (int i = 1; i <= totalPages; i++) {
-            Call<SearchResult> call = client.search(apiKey, query, "de", totalPages);
+            Call<SearchResult> call = client.search(apiKey, query, "de", i);
             try {
                 SearchResult searchResult = call.execute().body();
                 collection.addAll(transformer.transform(searchResult.getResults()));

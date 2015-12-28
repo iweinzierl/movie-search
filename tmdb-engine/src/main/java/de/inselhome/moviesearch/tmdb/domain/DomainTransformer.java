@@ -1,5 +1,6 @@
 package de.inselhome.moviesearch.tmdb.domain;
 
+import com.google.common.base.Strings;
 import de.inselhome.moviesearch.api.domain.Movie;
 import de.inselhome.moviesearch.api.domain.MoviePreview;
 import de.inselhome.moviesearch.tmdb.constants.APIConstants;
@@ -47,6 +48,10 @@ public class DomainTransformer {
     }
 
     private String createCoverUri(final String posterPath) {
+        if (Strings.isNullOrEmpty(posterPath)) {
+            return null;
+        }
+
         return String.format("%s%s", APIConstants.COVER_BASE_URL, posterPath);
     }
 }
