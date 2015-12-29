@@ -12,6 +12,19 @@
     <name>Container for moviedatabase search API and TMDB engine.</name>
     <description>Container for moviedatabase search API and TMDB engine.</description>
 
+    <distributionManagement>
+        <repository>
+            <id>inselhome.nexus</id>
+            <name>Internal Repository on inselhome.org</name>
+            <url>http://inselhome.org:8081/nexus/content/repositories</url>
+        </repository>
+        <snapshotRepository>
+            <id>inselhome.nexus</id>
+            <name>Internal Repository on inselhome.org</name>
+            <url>http://inselhome.org:8081/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
