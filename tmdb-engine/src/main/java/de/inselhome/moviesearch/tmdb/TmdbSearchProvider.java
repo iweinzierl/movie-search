@@ -14,6 +14,9 @@ import de.inselhome.moviesearch.tmdb.search.MovieSearchFactory;
 import de.inselhome.moviesearch.tmdb.search.SearchClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import retrofit.Call;
 
 import java.io.IOException;
@@ -21,24 +24,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class TmdbSearchProvider implements SearchProvider {
 
-    public static final String BASE_URL = "http://api.themoviedb.org/";
-    public static final String BASE_LANGUAGE = "de";
-
     private static final Logger LOG = LoggerFactory.getLogger(TmdbSearchProvider.class);
-    private static final DomainTransformer transformer = new DomainTransformer();
 
+    private final DomainTransformer transformer;
+    private final MovieSearchFactory movieSearchFactory;
+    private final MovieFactory movieFactory;
+
+    @Value("${tmdb.api.key}")
     private String apiKey;
+
+    @Value("${tmdb.api.language:de}")
     private String language;
 
-    public TmdbSearchProvider(final String apiKey) {
-        this(apiKey, BASE_LANGUAGE);
-    }
-
-    public TmdbSearchProvider(final String apiKey, final String language) {
-        this.apiKey = apiKey;
-        this.language = language;
+    @Autowired
+    public TmdbSearchProvider(DomainTransformer transformer, MovieSearchFactory movieSearchFactory, MovieFactory movieFactory) {
+        this.transformer = transformer;
+        this.movieSearchFactory = movieSearchFactory;
+        this.movieFactory = movieFactory;
     }
 
     @Override
@@ -61,7 +66,7 @@ public class TmdbSearchProvider implements SearchProvider {
 
     @Override
     public List<MoviePreview> search(final String searchString, final Integer maxResults) {
-        SearchClient searchClient = new MovieSearchFactory(BASE_URL).createSearchClient();
+        SearchClient searchClient = movieSearchFactory.createSearchClient();
         Call<SearchResult> searchCall = searchClient.search(apiKey, searchString, language);
         try {
             SearchResult searchResult = searchCall.execute().body();
@@ -78,7 +83,7 @@ public class TmdbSearchProvider implements SearchProvider {
         final List<MoviePreview> collection = new ArrayList<>();
 
         for (int i = 1; i <= totalPages; i++) {
-            Call<SearchResult> call = client.search(apiKey, query, "de", i);
+            Call<SearchResult> call = client.search(apiKey, query, language, i);
             try {
                 SearchResult searchResult = call.execute().body();
                 collection.addAll(transformer.transform(searchResult.getResults()));
@@ -92,7 +97,7 @@ public class TmdbSearchProvider implements SearchProvider {
 
     @Override
     public Movie get(String movieId) {
-        MovieClient client = new MovieFactory(BASE_URL).createMovieClient();
+        MovieClient client = movieFactory.createMovieClient();
         Call<MovieResult> movieResultCall = client.getMovie(Integer.valueOf(movieId), apiKey, language);
 
         try {

@@ -4,20 +4,32 @@ import com.google.common.base.Strings;
 import de.inselhome.moviesearch.api.domain.Movie;
 import de.inselhome.moviesearch.api.domain.MoviePreview;
 import de.inselhome.moviesearch.tmdb.constants.APIConstants;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Component
 public class DomainTransformer {
 
+    @Autowired
+    private GenreFinder genreFinder;
+
     public MoviePreview transform(MovieSearchResult movieResult) {
+        List<String> genreIds = movieResult.getGenreIds()
+                .stream()
+                .map(integer -> String.valueOf(integer))
+                .collect(Collectors.toList());
+
         return new MoviePreviewImpl(
                 String.valueOf(movieResult.getId()),
                 movieResult.getTitle(),
                 createCoverUri(movieResult.getPosterPath()),
-                movieResult.getOverview()
+                movieResult.getOverview(),
+                genreFinder.find(genreIds)
         );
     }
 

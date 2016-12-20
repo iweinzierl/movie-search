@@ -1,5 +1,7 @@
 package de.inselhome.moviesearch.api.domain;
 
+import java.util.List;
+
 public interface MoviePreview {
 
     String getMovieId();
@@ -9,4 +11,6 @@ public interface MoviePreview {
     String getCover();
 
     String getDescription();
+
+    List<String> getGenres();
 }

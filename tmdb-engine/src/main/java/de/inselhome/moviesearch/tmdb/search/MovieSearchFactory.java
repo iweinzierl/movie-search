@@ -7,6 +7,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 
@@ -14,13 +17,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
+@Component
 public class MovieSearchFactory {
 
+    @Value("${tmdb.api.baseUrl}")
     private String baseUrl;
-
-    public MovieSearchFactory(final String baseUrl) {
-        this.baseUrl = baseUrl;
-    }
 
     public SearchClient createSearchClient() {
         OkHttpClient client = createClient();
