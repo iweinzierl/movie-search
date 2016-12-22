@@ -6,7 +6,7 @@
 
     <groupId>com.github.iweinzierl</groupId>
     <artifactId>moviedatabase-search-api-container</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Container for moviedatabase search API and TMDB engine.</name>
