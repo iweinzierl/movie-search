@@ -1,5 +1,6 @@
 package de.inselhome.moviesearch.api.domain;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface MoviePreview {
@@ -11,6 +12,10 @@ public interface MoviePreview {
     String getCover();
 
     String getDescription();
+
+    LocalDate getPublishDate();
+
+    int getLength();
 
     List<String> getGenres();
 }

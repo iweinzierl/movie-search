@@ -21,16 +21,17 @@ public class DomainTransformer {
     public MoviePreview transform(MovieSearchResult movieResult) {
         List<String> genreIds = movieResult.getGenreIds()
                 .stream()
-                .map(integer -> String.valueOf(integer))
+                .map(String::valueOf)
                 .collect(Collectors.toList());
 
-        return new MoviePreviewImpl(
-                String.valueOf(movieResult.getId()),
-                movieResult.getTitle(),
-                createCoverUri(movieResult.getPosterPath()),
-                movieResult.getOverview(),
-                genreFinder.find(genreIds)
-        );
+        return MoviePreviewImpl.builder()
+                .id(String.valueOf(movieResult.getId()))
+                .title(movieResult.getTitle())
+                .description(movieResult.getOverview())
+                .cover(createCoverUri(movieResult.getPosterPath()))
+                .publishDate(movieResult.getReleaseDate())
+                .genres(genreFinder.find(genreIds))
+                .build();
     }
 
     public List<MoviePreview> transform(List<MovieSearchResult> movieResults) {
